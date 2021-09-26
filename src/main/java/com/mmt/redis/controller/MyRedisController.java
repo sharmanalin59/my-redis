@@ -93,7 +93,7 @@ public class MyRedisController {
             );
         }
         return new ResponseEntity<>(
-                new Response<>(null, "Key already exists!!",false),
+                new Response<>(null, "Key and value already exists!!",false),
                 HttpStatus.CONFLICT
         );
     }
@@ -126,7 +126,7 @@ public class MyRedisController {
             );
         }
         return new ResponseEntity<>(
-                new Response<>(null, "Key does not exist!!",true),
+                new Response<>(null, "Key's value does not exist!!",false),
                 HttpStatus.CONFLICT
         );
     }
