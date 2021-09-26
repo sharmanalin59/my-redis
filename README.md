@@ -1,22 +1,17 @@
 # my-redis
-There are three flavours of Update operations-:
+###There are three flavours of Update operations-:
 1. MyRedisMapComputeDao - This uses ConcurrentHashMap's computeIfPresent to atomically update.
 2. MyRedisAtomicCASUpdateDao - This uses AtomicInteger for CHM value, in severe contentions, it may waste CPU cycles
 3. MyRedisConcurrentUpdatePerformantDao - This uses LongAdder which is recommended for high concurrent updates(severe contentions).
 
-Apache Bench was used to measure the performance of these three flavors in concurrency level of 10 with 1000 requests(AB is not for load test, please use JMeter)
-and below are the results -:
+###Apache Bench was used to measure the performance of these three flavors in concurrency level of 10 with 1000 requests(AB is not for load test, please use JMeter) using following-:
 
-
-ab -n 10000 -c 5 http://127.0.0.1:8080/my-redis/key/
-
-ab -u empty_file.txt -n 100000 -c 10 http://127.0.0.1:8080/my-redis/key/
 ab -u empty_file.txt -n 1000 -c 10 http://127.0.0.1:8080/my-redis/key/
 
 
-
+And below are the results -:
 -------------------------------------------------------------------------------------------
-For myRedisMapComputeDao
+###For myRedisMapComputeDao
 
 Finished 1000 requests
 
@@ -63,7 +58,7 @@ Percentage of the requests served within a certain time (ms)
  100%     57 (longest request)
  -------------------------------------------------------------------------------------------
 
- For myRedisAtomicCASUpdateDao
+###For myRedisAtomicCASUpdateDao
 
  Finished 1000 requests
 
@@ -108,7 +103,7 @@ Percentage of the requests served within a certain time (ms)
  100%     33 (longest request)
 
 -------------------------------------------------------------------------------------------
-For myRedisConcurrentUpdatePerformantDao
+###For myRedisConcurrentUpdatePerformantDao
 
 Finished 1000 requests
 
@@ -155,4 +150,4 @@ Percentage of the requests served within a certain time (ms)
 
 -------------------------------------------------------------------------------------------
 
-Conclusion -: In concurrent environment there was almost no performance difference seen across the three variants for update, which needs more figuring
+###Conclusion -: In concurrent environment there was almost no performance difference seen across the three variants for update, which needs more figuring
