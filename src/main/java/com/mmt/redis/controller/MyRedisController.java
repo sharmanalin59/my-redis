@@ -78,7 +78,7 @@ public class MyRedisController {
         }
 
         try {
-            if (myRedisDao.post(entry.getKey(), entry.getValue()) == null) {
+            if (Objects.isNull(myRedisDao.post(entry.getKey(), entry.getValue()))) {
                 return new ResponseEntity<>(
                         new Response<>(null, "created successfully",true),
                         HttpStatus.CREATED);
