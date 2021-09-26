@@ -40,7 +40,7 @@ o    A GET call on http://<localhost>/my-redis/threadSafeKey should return 101 a
 ab -u empty_file.txt -n 1000 -c 10 http://127.0.0.1:8080/my-redis/key/
 
 
- And below are the results -:
+#### And below are the results -:
 -------------------------------------------------------------------------------------------
 #### For myRedisMapComputeDao
 
@@ -181,4 +181,4 @@ Percentage of the requests served within a certain time (ms)
 
 -------------------------------------------------------------------------------------------
 
-### Conclusion -: In concurrent environment there was almost no performance difference seen across the three variants for update, which needs more figuring
+### Conclusion -: In concurrent environment, all variants(myRedisMapComputeDao, myRedisAtomicCASUpdateDao, myRedisConcurrentUpdatePerformantDao) performed in a thread safe manner but there was almost no performance difference seen across the three variants for update, which needs more figuring
