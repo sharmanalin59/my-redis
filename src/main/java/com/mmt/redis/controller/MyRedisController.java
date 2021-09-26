@@ -28,7 +28,7 @@ public class MyRedisController {
     Logger logger = LoggerFactory.getLogger(MyRedisController.class);
 
     @Autowired
-    @Qualifier("myRedisAtomicCASUpdateDao")
+    @Qualifier("myRedisMapComputeDao")
     IMyRedisDao myRedisDao;
 
 
