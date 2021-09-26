@@ -21,10 +21,11 @@ public class MyRedisConcurrentUpdatePerformantDao implements IMyRedisDao {
     Map<String, LongAdder> map = new ConcurrentHashMap<>();
 
     public Integer get(String key) {
-        if(!map.containsKey(key)) {
+        LongAdder val;
+        if(Objects.isNull(val = map.get(key))) {
             return null;
         }
-        return map.get(key).intValue();
+        return val.intValue();
     }
 
     public Integer post(String key, int intVal) {

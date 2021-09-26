@@ -21,10 +21,11 @@ public class MyRedisAtomicCASUpdateDao implements IMyRedisDao {
     Map<String, AtomicInteger> map = new ConcurrentHashMap<>();
 
     public Integer get(String key) {
-        if(!map.containsKey(key)) {
+        AtomicInteger val;
+        if(Objects.isNull(val = map.get(key))) {
             return null;
         }
-        return map.get(key).get();
+        return val.get();
     }
 
     public Integer post(String key, int val) {
