@@ -113,7 +113,7 @@ public class MyRedisController {
         try {
             if (Objects.nonNull(val = myRedisDao.put(key))) {
                 return new ResponseEntity<>(
-                        new Response<>(val, "updated successfully",true),
+                        new Response<>(val, "updated successfully!",true),
                         HttpStatus.CREATED);
             }
         }
