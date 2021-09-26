@@ -30,19 +30,19 @@ o    A GET call on http://<localhost>/my-redis/threadSafeKey should return 101 a
  
 ### Solution proposed
  
-### There are three flavours of Update operations-:
+#### There are three flavours of Update operations-:
 1. MyRedisMapComputeDao - This uses ConcurrentHashMap's computeIfPresent to atomically update.
 2. MyRedisAtomicCASUpdateDao - This uses AtomicInteger for CHM value, in high contention, it may waste CPU cycles
 3. MyRedisConcurrentUpdatePerformantDao - This uses LongAdder which is recommended for high concurrent updates(high contention).
 
-### Apache Bench was used to measure the performance of these three flavors in concurrency level of 10 with 1000 requests(AB is not for load test, please use JMeter) using following-:
+#### Apache Bench was used to measure the performance of these three flavors in concurrency level of 10 with 1000 requests(AB is not for load test, please use JMeter) using following-:
 
 ab -u empty_file.txt -n 1000 -c 10 http://127.0.0.1:8080/my-redis/key/
 
 
  And below are the results -:
 -------------------------------------------------------------------------------------------
-### For myRedisMapComputeDao
+#### For myRedisMapComputeDao
 
 Finished 1000 requests
 
@@ -89,7 +89,7 @@ Percentage of the requests served within a certain time (ms)
  100%     57 (longest request)
  -------------------------------------------------------------------------------------------
 
-### For myRedisAtomicCASUpdateDao
+#### For myRedisAtomicCASUpdateDao
 
  Finished 1000 requests
 
@@ -134,7 +134,7 @@ Percentage of the requests served within a certain time (ms)
  100%     33 (longest request)
 
 -------------------------------------------------------------------------------------------
-### For myRedisConcurrentUpdatePerformantDao
+#### For myRedisConcurrentUpdatePerformantDao
 
 Finished 1000 requests
 
