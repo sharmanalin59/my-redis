@@ -1,17 +1,48 @@
 # my-redis
-### There are three flavours of Update operations-:
-1. MyRedisMapComputeDao - This uses ConcurrentHashMap's computeIfPresent to atomically update.
-2. MyRedisAtomicCASUpdateDao - This uses AtomicInteger for CHM value, in severe contentions, it may waste CPU cycles
-3. MyRedisConcurrentUpdatePerformantDao - This uses LongAdder which is recommended for high concurrent updates(severe contentions).
 
-### Apache Bench was used to measure the performance of these three flavors in concurrency level of 10 with 1000 requests(AB is not for load test, please use JMeter) using following-:
+### Problem statememt-:
+mini-redis
+
+If you are not familiar with how Redis works – read up on https://redis.io
+ 
+Create a service which do the following: - 
+ 
+-        Store a key value pair in memory via a http POST method
+o    For example, posting {‘k’: “v”} to http://<localhost>/my-redis/ should store the value in the server and return the appropriate HTTP response code
+-        Retrieve a value from memory given the key via a http GET method
+o    For example, a GET call on  http://<localhost>/my-redis/k should return “v” and return the appropriate HTTP response code
+-        Retrieve an incremented value of a key via a http PUT method
+o    For example, posting {‘ik’: 1} to http://<localhost>/my-redis/ should store the value in the server and return the appropriate HTTP response code
+o    A PUT call to http://<localhost>/my-redis/increment/ik should internally increment the value of the key ik in the server to 2 and return 2 along with the applicable response codes
+o    A GET call to http://<localhost>/my-redis/ik should return 2 along with the applicable http response code to prove the above point
+ 
+Points to note:
+-        Extra credit if you can do this in java or golang
+-       Extra credit if you can do this  The increment method MUST be written in a thread-safe manner. 
+-       To prove this, 
+ 
+o    Post {‘threadSafeKey’: 1} to your server http://<localhost>/my-redis
+o    Run apache bench -- ab -n 100 -c 10 http://<localhost>/my-redis/increment/threadSafekey  (100 calls with a max of 10 being concurrent)
+o    A GET call on http://<localhost>/my-redis/threadSafeKey should return 101 along with the appropriate http response code
+ 
+
+ 
+ 
+### Solution proposed-:
+ 
+#### There are three flavours of Update operations-:
+1. MyRedisMapComputeDao - This uses ConcurrentHashMap's computeIfPresent to atomically update.
+2. MyRedisAtomicCASUpdateDao - This uses AtomicInteger for CHM value, in high contention, it may waste CPU cycles
+3. MyRedisConcurrentUpdatePerformantDao - This uses LongAdder which is recommended for high concurrent updates(high contention).
+
+#### Apache Bench was used to measure the performance of these three flavors in concurrency level of 10 with 1000 requests(AB is not for load test, please use JMeter) using following-:
 
 ab -u empty_file.txt -n 1000 -c 10 http://127.0.0.1:8080/my-redis/key/
 
 
- And below are the results -:
+#### And below are the results -:
 -------------------------------------------------------------------------------------------
-### For myRedisMapComputeDao
+#### For myRedisMapComputeDao
 
 Finished 1000 requests
 
@@ -58,7 +89,7 @@ Percentage of the requests served within a certain time (ms)
  100%     57 (longest request)
  -------------------------------------------------------------------------------------------
 
-### For myRedisAtomicCASUpdateDao
+#### For myRedisAtomicCASUpdateDao
 
  Finished 1000 requests
 
@@ -103,7 +134,7 @@ Percentage of the requests served within a certain time (ms)
  100%     33 (longest request)
 
 -------------------------------------------------------------------------------------------
-### For myRedisConcurrentUpdatePerformantDao
+#### For myRedisConcurrentUpdatePerformantDao
 
 Finished 1000 requests
 
@@ -150,4 +181,4 @@ Percentage of the requests served within a certain time (ms)
 
 -------------------------------------------------------------------------------------------
 
-### Conclusion -: In concurrent environment there was almost no performance difference seen across the three variants for update, which needs more figuring
+### Conclusion -: In concurrent environment, all variants(myRedisMapComputeDao, myRedisAtomicCASUpdateDao, myRedisConcurrentUpdatePerformantDao) performed in a thread safe manner but there was almost no performance difference seen across the three variants for update, which needs more figuring
