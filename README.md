@@ -77,7 +77,7 @@ Total:          1    3   6.1      2      57
 WARNING: The median and mean for the initial connection time are not within a normal deviation
         These results are probably not that reliable.
 
-##### Percentage of the requests served within a certain time (ms)
+Percentage of the requests served within a certain time (ms)
   50%      2
   66%      3
   75%      3
