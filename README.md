@@ -1,8 +1,8 @@
 # my-redis
 ### There are three flavours of Update operations-:
 1. MyRedisMapComputeDao - This uses ConcurrentHashMap's computeIfPresent to atomically update.
-2. MyRedisAtomicCASUpdateDao - This uses AtomicInteger for CHM value, in severe contentions, it may waste CPU cycles
-3. MyRedisConcurrentUpdatePerformantDao - This uses LongAdder which is recommended for high concurrent updates(severe contentions).
+2. MyRedisAtomicCASUpdateDao - This uses AtomicInteger for CHM value, in high contention, it may waste CPU cycles
+3. MyRedisConcurrentUpdatePerformantDao - This uses LongAdder which is recommended for high concurrent updates(high contention).
 
 ### Apache Bench was used to measure the performance of these three flavors in concurrency level of 10 with 1000 requests(AB is not for load test, please use JMeter) using following-:
 
