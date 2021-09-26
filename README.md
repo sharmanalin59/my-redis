@@ -26,7 +26,10 @@ o    Run apache bench -- ab -n 100 -c 10 http://<localhost>/my-redis/increment/t
 o    A GET call on http://<localhost>/my-redis/threadSafeKey should return 101 along with the appropriate http response code
  
 
-
+ 
+ 
+### Solution proposed
+ 
 ### There are three flavours of Update operations-:
 1. MyRedisMapComputeDao - This uses ConcurrentHashMap's computeIfPresent to atomically update.
 2. MyRedisAtomicCASUpdateDao - This uses AtomicInteger for CHM value, in high contention, it may waste CPU cycles
